@@ -95,41 +95,20 @@ angular.module('app.services', [])
     return {
 
         savePhotoToParse: function (_params) {
+          var dataObject = {base64: _params.photo};
 
-    // for POST, we only need to set the authentication header
-    
-    // for POST, we need to specify data to add, AND convert it to
-    // a string before passing it in as separate parameter data
-    var dataObject = {base64: _params.photo};
-
-    // $http returns a promise, which has a then function
-    return $http.post(baseurl + 'files/mypic.jpg', dataObject, defaultSettings)
-        .then(function (response) {
-            // In the response resp.data contains the result
-            // check the console to see all of the data returned
-            console.log('savePhotoToParse', response);
-            IMAGE = {
+   
+            return $http.post(baseurl + 'files/mypic.jpg', dataObject, defaultSettings)
+                .then(function (response) {
+            
+                 console.log('savePhotoToParse', response);
+                  IMAGE = {
                     "name": response.data.name,
                     "__type": "File"
                 };
 
-            // now save to ImageObject Class
-            return $http.post(baseURL + '/test', {
-               // caption: _params.caption,
-                picture: {
-                    "name": response.data.name,
-                    "__type": "File"
-                }
-             
-            }, defaultSettings);
-        }).then(function (_imageInfoResp) {
-            //return picture;
-            console.log(_imageInfoResp);
-            return _imageInfoResp.data;
-        }, function (_error) {
-            console.log("Error: ", _error);
-        });
-},
+            });
+        },
 
 
         getPicture: function(){
